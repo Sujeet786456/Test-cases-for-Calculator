@@ -1,0 +1,101 @@
+package com.example.calculator;
+
+import io.appium.java_client.MobileBy;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.remote.AutomationName;
+import io.appium.java_client.remote.MobileCapabilityType;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class AppTest {
+    private IOSDriver<MobileElement> driver;
+
+    @Before
+    public void setUp() throws MalformedURLException {
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+        desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS");
+        desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "14.5");
+        desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 12");
+        desiredCapabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, AutomationName.IOS_XCUI_TEST);
+        desiredCapabilities.setCapability(MobileCapabilityType.APP, "/path/to/your/calculator.app");
+
+        URL appiumServerUrl = new URL("http://localhost:4723/wd/hub");
+        driver = new IOSDriver<>(appiumServerUrl, desiredCapabilities);
+    }
+
+    @Test
+    public void additionTest() {
+        MobileElement number2 = driver.findElement(MobileBy.AccessibilityId("2"));
+        MobileElement plusButton = driver.findElement(MobileBy.AccessibilityId("plus"));
+        MobileElement number3 = driver.findElement(MobileBy.AccessibilityId("3"));
+        MobileElement equalsButton = driver.findElement(MobileBy.AccessibilityId("equals"));
+        MobileElement result = driver.findElement(MobileBy.AccessibilityId("result"));
+
+        number2.click();
+        plusButton.click();
+        number3.click();
+        equalsButton.click();
+
+        Assert.assertEquals("5", result.getText());
+    }
+
+    @Test
+    public void subtractionTest() {
+        MobileElement number7 = driver.findElement(MobileBy.AccessibilityId("7"));
+        MobileElement minusButton = driver.findElement(MobileBy.AccessibilityId("minus"));
+        MobileElement number4 = driver.findElement(MobileBy.AccessibilityId("4"));
+        MobileElement equalsButton = driver.findElement(MobileBy.AccessibilityId("equals"));
+        MobileElement result = driver.findElement(MobileBy.AccessibilityId("result"));
+
+        number7.click();
+        minusButton.click();
+        number4.click();
+        equalsButton.click();
+
+        Assert.assertEquals("3", result.getText());
+    }
+
+    @Test
+    public void multiplicationTest() {
+        MobileElement number5 = driver.findElement(MobileBy.AccessibilityId("5"));
+        MobileElement multiplyButton = driver.findElement(MobileBy.AccessibilityId("multiply"));
+        MobileElement number6 = driver.findElement(MobileBy.AccessibilityId("6"));
+        MobileElement equalsButton = driver.findElement(MobileBy.AccessibilityId("equals"));
+        MobileElement result = driver.findElement(MobileBy.AccessibilityId("result"));
+
+        number5.click();
+        multiplyButton.click();
+        number6.click();
+        equalsButton.click();
+
+        Assert.assertEquals("30", result.getText());
+    }
+
+    @Test
+    public void divisionTest() {
+        MobileElement number9 = driver.findElement(MobileBy.AccessibilityId("9"));
+        MobileElement divideButton = driver.findElement(MobileBy.AccessibilityId("divide"));
+        MobileElement number3 = driver.findElement(MobileBy.AccessibilityId("3"));
+        MobileElement equalsButton = driver.findElement(MobileBy.AccessibilityId("equals"));
+        MobileElement result = driver.findElement(MobileBy.AccessibilityId("result"));
+
+        number9.click();
+        divideButton.click();
+        number3.click();
+        equalsButton.click();
+
+        Assert.assertEquals("3", result.getText());
+    }
+
+    @After
+    public void tearDown() {
+        driver.quit();
+    }
+}
